@@ -6,6 +6,7 @@ Auguste Schulz\*, Christoph Miehl\*, Michael J. Berry II, Julijana Gjorgjieva
 
 \* equal contribution  
 
+https://www.biorxiv.org/content/10.1101/2020.11.30.403840v1
 
 ## A spiking neural network model to investigate cortical novelty responses
 This project is concerned with the underlying mechanisms that give rise to novelty responses in sensory cortices. Stimulation paradigms were inspired by experiments performed in the primary visual cortex as reported in Homann et al., BioRxiv 2017 and in primary auditory cortex in Natan et al., eLife 2015.
