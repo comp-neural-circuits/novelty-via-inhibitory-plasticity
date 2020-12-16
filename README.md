@@ -1,6 +1,6 @@
-# v1novelty-pub
+# novelty-via-inhibitory-plasticity
 
-v1novelty project code accompanying https://www.biorxiv.org/content/10.1101/2020.11.30.403840v1  
+novelty-via-inhibitory-plasticity project code accompanying https://www.biorxiv.org/content/10.1101/2020.11.30.403840v1  
 The generation of cortical novelty responses through inhibitory plasticity  
 Auguste Schulz\*, Christoph Miehl\*, Michael J. Berry II, Julijana Gjorgjieva   
 
@@ -13,7 +13,7 @@ We set up a spiking neural network model of the mouse primary sensory cortex (80
 
 Some of the simulation code follows code provided by Litwin-Kumar and Doiron [1].
 
-The code is written in Julia (https://julialang.org/, https://github.com/JuliaLang/julia) (Version 1.0.1).  
+The simulation code is written in Julia (https://julialang.org/, https://github.com/JuliaLang/julia) (Version 1.0.1). 
 
 Required packages:
 
@@ -56,6 +56,7 @@ run the following command
 - for the repeated sequence paradigm (compare Figure 3,4, Suppl. Figure 1)
 > nohup julia initsim_sequence_violation_ARGS.jl 3 20 5 10 300 12 5 10 0 10 &> ../tmp/standard_run_repeated_sequence.txt &
 
+
 #### For 2. the oddball paradigm,  
 run the following command
 - for the standard SSA oddball experiment without disinhibition
@@ -65,7 +66,6 @@ Nreps 20, Nblocks 1, lenstim 300, lenpause 900, Nneurons 200, pretrain false, in
 - for the standard SSA oddball experiment with disinhibition
 Nreps 20, Nblocks 1, lenstim 300, lenpause 900, Nneurons 200, pretrain false, inhibfactor 0.1, disinhibfraction 1.5
 > nohup julia initsim_oddball_disinhib_ARGS.jl 20 1 300 900 200 0 10 150 &> ../tmp/SSA_disinhibition_strength_150.txt &
-
 
 #### Postprocessing  
 
