@@ -58,21 +58,21 @@ ifwadapt = false	#  consider AdEx or Ex IF neurons
 #ARGS = ["20", "1", "300", "900", "200", "0", "10", "150]
 
 # stimulus parameters
-Nimg = 1								# number of stimuli per sequence
-Nreps = parse(Int64, ARGS[1])			# number of repetitions per sequence cycle
-Nseq = 1								# number of sequences
-Nblocks = parse(Int64, ARGS[2])			# number of sequence block repetitions
-stimstart = 4000						# start time of stimulation in ms
-lenstimpre = parse(Int64, ARGS[3])		# duration of assembly stimulation per image in ms
-lenpausepre = parse(Int64, ARGS[4])		# duration of no stimulation between two images in ms
-strengthpre = 12						# strength of the stimulation in kHz added to baseline input
-lenstim = lenstimpre					# duration of assembly stimulation per image in ms
-lenpause = lenpausepre					# duration of no stimulation between two images in ms
-strength = strengthpre					# strength of the stimulation in kHz added to baseline input
-Ntrain = 0								# number of pretraining iterations
-Nass = (Nimg) * Nseq +  Nseq * Nblocks  # total number of assemblies Nimg * Nseq + all novelty assemblies
-n_neurons = parse(Int64, ARGS[5])		# number of neurons driven by stimulus A and B
-ifAAnotAB = false 						# set false if AAAABA shown not AAAAAA
+Nimg = 1 # number of stimuli per sequence
+Nreps = parse(Int64, ARGS[1]) # number of repetitions per sequence cycle
+Nseq = 1 # number of sequences
+Nblocks = parse(Int64, ARGS[2]) # number of sequence block repetitions
+stimstart = 4000 # start time of stimulation in ms
+lenstimpre = parse(Int64, ARGS[3]) # duration of assembly stimulation per image in ms
+lenpausepre = parse(Int64, ARGS[4]) # duration of no stimulation between two images in ms
+strengthpre = 12 # strength of the stimulation in kHz added to baseline input
+lenstim = lenstimpre # duration of assembly stimulation per image in ms
+lenpause = lenpausepre # duration of no stimulation between two images in ms
+strength = strengthpre # strength of the stimulation in kHz added to baseline input
+Ntrain = 0 # number of pretraining iterations
+Nass = (Nimg) * Nseq +  Nseq * Nblocks # total number of assemblies Nimg * Nseq + all novelty assemblies
+n_neurons = parse(Int64, ARGS[5]) # number of neurons driven by stimulus A and B
+ifAAnotAB = false # set false if AAAABA shown not AAAAAA
 
 # select if pretraining or not
 pretrainig = false

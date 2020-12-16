@@ -59,19 +59,19 @@ ifwadapt = false	#  consider AdEx or Ex IF neurons
 # ARGS = ["3", "20", "5", "10","300", "12", "5", "10", "0", "10"] # repeated sequences
 
 # stimulus parameters
-Nimg = parse(Int64, ARGS[1])			# number of stimuli per sequence
-Nreps = parse(Int64, ARGS[2])			# number of repetitions per sequence cycle
-Nseq = parse(Int64, ARGS[3])			# number of sequences
-Nblocks = parse(Int64, ARGS[4])			# number of sequence block repetitions
-stimstart = 4000						# start time of stimulation in ms
-lenstimpre = parse(Int64, ARGS[5])		# duration of assembly stimulation per image in ms
-lenpausepre = 0							# duration of no stimulation between two images in ms
-strengthpre = parse(Int64, ARGS[6])		# strength of the stimulation in kHz added to baseline input
-lenstim = lenstimpre					# duration of assembly stimulation per image in ms
-lenpause = lenpausepre					# duration of no stimulation between two images in ms
-strength = strengthpre					# strength of the stimulation in kHz added to baseline input
-Ntrain = parse(Int64, ARGS[7])			# number of pretraining iterations
-Nass = (Nimg) * Nseq +  Nseq * Nblocks    # total number of assemblies Nimg * Nseq + all novelty assemblies
+Nimg = parse(Int64, ARGS[1]) # number of stimuli per sequence
+Nreps = parse(Int64, ARGS[2]) # number of repetitions per sequence cycle
+Nseq = parse(Int64, ARGS[3]) # number of sequences
+Nblocks = parse(Int64, ARGS[4]) # number of sequence block repetitions
+stimstart = 4000 # start time of stimulation in ms
+lenstimpre = parse(Int64, ARGS[5]) # duration of assembly stimulation per image in ms
+lenpausepre = 0 # duration of no stimulation between two images in ms
+strengthpre = parse(Int64, ARGS[6]) # strength of the stimulation in kHz added to baseline input
+lenstim = lenstimpre # duration of assembly stimulation per image in ms
+lenpause = lenpausepre # duration of no stimulation between two images in ms
+strength = strengthpre # strength of the stimulation in kHz added to baseline input
+Ntrain = parse(Int64, ARGS[7]) # number of pretraining iterations
+Nass = (Nimg) * Nseq +  Nseq * Nblocks # total number of assemblies Nimg * Nseq + all novelty assemblies
 
 # adjustment of learning rates
 adjustfactor = parse(Int64, ARGS[8])/10
