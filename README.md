@@ -80,7 +80,7 @@ Specify the name of the file to be analysed in the respective notebooks.
 
 Note that some of the post processing steps performed in the notebooks are only compatible with certain stimulation parameters and or various other stimulation paradigms not specified here.
 
-In case you would like to generate all the figures shown in the paper, please send an email to ga84zah@mytum.de and upon reasonable request we are happy to provide you with the corresponding datafiles, that would be too large to include in this repository.
+In case you would like to generate all the figures shown in the paper, please send an email to ga84zah@mytum.de, we are happy to provide you with the corresponding datafiles, that would be too large to include in this repository.
 
 [1] A. Litwin-Kumar & B. Doiron.  Formation and maintenance of neuronal assemblies through synaptic plasticity.  Nature Communications (2014).  
 Copyright notice:  
