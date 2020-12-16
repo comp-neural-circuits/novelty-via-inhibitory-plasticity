@@ -33,7 +33,7 @@ Packages can be installed via `using Pkg` `Pkg.add("PackageName")`.
  * `evaluation`    - contains the main evaluation (weight, spiketime) and evaluation helper files
   * `postprocessing`    - contains the postprocessing notebooks (python unsing standard packages)
 
-The simulation data (parameters, and spiketimes & cell id) are stored using `hdf5` file format in  the 'data' folder.
+The simulation data (parameters, weight evolution, and spiketimes & cell id) are stored using `hdf5` file format in  the 'data' folder.
 Evaluation of the stored data, i.e. generating histograms of the spiketimes, starts as soon as the main simulation finished and is stored in 'results' in folders that have the same name as the corresponding 'data' file.
 
 
