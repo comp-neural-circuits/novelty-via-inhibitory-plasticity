@@ -99,20 +99,14 @@ tag = "repseq.h5"
 
 # ---------------------- generate the stimulus --------------------------------
 
-
 # specify aspects of the stimulation paradigm
 withnovelty = true 		# novelty response
-pretrainig = true		# include pretraining phase
-
-# ----------- standard setting when the following three false -----------------
 shuffledstim = false	# shuffle the stimulus randomly
-lastshuffled = false	# shuffle the last two stimuli
-reducednovelty = false	# reduce the stimulation strength of the novel stimulus
+pretrainig = true		# include pretraining phase
 
 
 if withnovelty
 	if pretrainig
-		# --------- main stim generation function ---------------
 		stimulus = genstimparadigmpretraining(stimulus, Nass = Nass, Ntrain = Ntrain, stimstart = stimstart, lenstim = lenstimpre, lenpause = lenpausepre, strength = strengthpre)
 		lenpretrain = size(stimulus,1)
 	end
@@ -126,15 +120,11 @@ if withnovelty
 			stimulus, blockonset = genstimparadigmnovelshuffled(stimulus, Nimg = Nimg, Nreps = Nreps, Nseq = Nseq, Nblocks = Nblocks, stimstart = stimstart, lenstim = lenstim, lenpause = lenpause, strength = strength )
 			tag = "repeatedsequencesshuffled.h5"
 		end
-	else # if shuffled stim
-
-		# --------- main stim generation function ---------------
+	else
 		stimulus, blockonset = genstimparadigmnovelcont(stimulus, Nimg = Nimg, Nreps = Nreps, Nseq = Nseq, Nblocks = Nblocks, stimstart = stimstart, lenstim = lenstim, lenpause = lenpause, strength = strength )
 		tag = "repeatedsequences.h5"
-
-
 	end
-else # if with novelty
+else
 	# even if no novelty assemblies are shown still train with all novelty assemblies
 	if pretrainig
 		#println(stimulus)
@@ -154,7 +144,6 @@ if Ntrain == 0
 	lenpretrain = 0
 end
 
-
 # get sequence order
 blockidx = collect(lenpretrain + 1:Nreps*Nimg:size(stimulus,1)) # get all stimulus indices when a new sequence starts
 seqnumber = stimulus[blockidx,1]
@@ -165,6 +154,7 @@ end
 
 
 # Switch last two stimuli instead of novel stimulus
+lastshuffled = false
 if lastshuffled
 	if pretrainig
 
@@ -180,13 +170,15 @@ if lastshuffled
 		stimulus[idx.-1,1] = stimulus[idx,1] .+ 1
 		tag = "shufflenovelty" * tag
 
-	end # if pretraining
 
-end # if lastshuffled
+	end
+
+end
 
 
 # reduce novelty input by a certain factor a different one for each sequence
 # to infer the relevance of the novelty stimulus strength
+reducednovelty = false
 lastimages = collect(Nimg:Nimg:Nimg*Nseq)
 reducefactor =  collect(0:(1/(Nseq-1)):1)
 secondtolastimage = lastimages.-1
@@ -226,10 +218,6 @@ println(T)
 
 println("Simulation run time: $T")
 
-
-
-
-
 # --------------------- initialise savefile ---------------------------------------------------------
 
 # initialise savefile and avoid overwriting when identical parameters are used
@@ -247,7 +235,6 @@ weights = initweights(weightpars(Ne = Ne, Ni = Ni))
 assemblymembers = initassemblymembers(Nassemblies = Nass,Ne = Ne)
 # inhibitory tuning
 inhibassemblies = initinhibassemblymembers(Nassemblies = Nass, Ne = Ne, Ni = Ni)
-
 winit = copy(weights) # make a copy of initial weights as weights are updated by simulation
 
 
@@ -286,7 +273,7 @@ Nspikesmax = Ncells*Tstore*avgrate/1000 # Nr. neurons x run time in seconds x av
 spiket = zeros(Int32,Int(Nspikesmax),2)
 
 
-if Ntrain == 0 # switch back to 1 as it is used in run simulation julia indexing starts at 1
+if Ntrain == 0 # switch back to one as it is used in run simulation julia indexing starts at 1
 	lenpretrain = 1
 end
 # --------------------- run simulation ---------------------------------------------------------------

@@ -58,19 +58,19 @@ ifwadapt = false	#  consider AdEx or Ex IF neurons
 #ARGS = ["20", "1", "300", "900", "200", "0", "10", "150]
 
 # stimulus parameters
-Nimg = 1		# number of stimuli per sequence
-Nreps = parse(Int64, ARGS[1])		# number of repetitions per sequence cycle
-Nseq = 1		# number of sequences
-Nblocks = parse(Int64, ARGS[2])	# number of sequence block repetitions
-stimstart = 4000	# start time of stimulation in ms
-lenstimpre = parse(Int64, ARGS[3])	# duration of assembly stimulation per image in ms
-lenpausepre = parse(Int64, ARGS[4])	# duration of no stimulation between two images in ms
-strengthpre = 12		# strength of the stimulation in kHz added to baseline input
-lenstim = lenstimpre		# duration of assembly stimulation per image in ms
-lenpause = lenpausepre		# duration of no stimulation between two images in ms
-strength = strengthpre		# strength of the stimulation in kHz added to baseline input
-Ntrain = 0
-Nass = (Nimg) * Nseq +  Nseq * Nblocks    # total number of assemblies Nimg * Nseq + all novelty assemblies
+Nimg = 1								# number of stimuli per sequence
+Nreps = parse(Int64, ARGS[1])			# number of repetitions per sequence cycle
+Nseq = 1								# number of sequences
+Nblocks = parse(Int64, ARGS[2])			# number of sequence block repetitions
+stimstart = 4000						# start time of stimulation in ms
+lenstimpre = parse(Int64, ARGS[3])		# duration of assembly stimulation per image in ms
+lenpausepre = parse(Int64, ARGS[4])		# duration of no stimulation between two images in ms
+strengthpre = 12						# strength of the stimulation in kHz added to baseline input
+lenstim = lenstimpre					# duration of assembly stimulation per image in ms
+lenpause = lenpausepre					# duration of no stimulation between two images in ms
+strength = strengthpre					# strength of the stimulation in kHz added to baseline input
+Ntrain = 0								# number of pretraining iterations
+Nass = (Nimg) * Nseq +  Nseq * Nblocks  # total number of assemblies Nimg * Nseq + all novelty assemblies
 
 n_neurons = parse(Int64, ARGS[5])
 SSA = false
@@ -151,11 +151,15 @@ seqnumber = stimulus[blockidx,1]
 for n = 2:Nseq
     seqnumber[seqnumber .== (1 + (n-1)*Nimg)] .= n
 end
+
+# ------------------ important oddball paradigm step -------------
+
 # replace all novel images by 2
 stimulus[stimulus[:,1].>1,1] .= 2
 swap_stim = blockidx[floor(Int8,length(blockidx)./2)+1]
 
-#println(stimulus)
+# to test if also works for BBBBBBBAB instead of AAAAAAABA swap
+
 ifswap = false
 if ifswap
 	for i in range(swap_stim,size(stimulus)[1])
@@ -166,6 +170,8 @@ if ifswap
 		end
 	end
 end
+
+# add a delay period between two test blocks
 addelay = false
 if addelay # ensure waiting time of 10000 before new blocks start
 	for bb = 2:length(blockidx)
@@ -175,82 +181,20 @@ if addelay # ensure waiting time of 10000 before new blocks start
 end
 
 
-# Switch last two images instead of novel image
-lastshuffled = false
-if lastshuffled
-	if pretrainig
-
-		idx = findall(stimulus[lenpretrain + 1:end,1] .> Nseq*Nimg)
-		vals = stimulus[idx.+(lenpretrain),1]
-		stimulus[idx.+(lenpretrain),1] .= stimulus[idx.+(lenpretrain-1),1]
-		stimulus[idx.+(lenpretrain-1),1] .= stimulus[idx.+(lenpretrain-1),1] .+ 1
-		tag = "shufflenovelty" * tag
-	else
-		idx = findall(stimulus[:,1] .> Nseq*Nimg)
-		vals = stimulus[idx,1]
-		stimulus[idx,1] = stimulus[idx.-1,1]
-		stimulus[idx.-1,1] = stimulus[idx,1] .+ 1
-		tag = "shufflenovelty" * tag
-
-
-	end
-
-end
-
-
-# reduce novelty input by a certain factor a different one for each sequence
-# to infer the relevance of the novelty stimulus strength
-reducednovelty = false
-lastimages = collect(Nimg:Nimg:Nimg*Nseq)
-reducefactor =  collect(0:(1/(Nseq-1)):1)
-secondtolastimage = lastimages.-1
-#reducefactor = 0.5
-if reducednovelty
-	if pretrainig
-
-		idx = findall(stimulus[lenpretrain + 1:end,1] .> Nseq*Nimg)
-		vals = stimulus[idx.+(lenpretrain),1]
-		for i in idx
-			for im = 1:length(secondtolastimage)
-				if stimulus[i+(lenpretrain-1),1] == secondtolastimage[im]# if previous image is certain second to last image of sequence reduce by corresponding factor
-					stimulus[i+(lenpretrain),4] = stimulus[i+(lenpretrain),4]*reducefactor[im]
-				end
-			end
-		end
-		#stimulus[idx.+(lenpretrain-1),1] .= stimulus[idx.+(lenpretrain-1),1] .+ 1
-		tag = "reducednovelty$(reducefactor)" * tag
-	else
-		idx = findall(stimulus[:,1] .> Nseq*Nimg)
-		vals = stimulus[idx,1]
-		for i in idx
-			for im = 1:length(secondtolastimage)
-				if stimulus[i-1,1] == secondtolastimage[im]# if previous image is certain second to last image of sequence reduce by corresponding factor
-					stimulus[i,4] = stimulus[i,4]*reducefactor[im]
-				end
-			end
-		end
-		#stimulus[idx.+(lenpretrain-1),1] .= stimulus[idx.+(lenpretrain-1),1] .+ 1
-		tag = "reducednovelty$(reducefactor)" * tag
-	end
-
-end
 
 # simulation run time
 T = stimulus[end,3]+lenpause # last stimulation time + pause duration
-#T = 1.5*T
-println(T)
-
-#T = 1000
 println("Simulation run time: $T")
 
 
 # initialise savefile and avoid overwriting when identical parameters are used
 datetime = Dates.format(Dates.now(), "yyyy-mm-dd-HH-MM-SS")
 
-filesavename = "Oddball_$(n_neurons)_disinhib_$(ifdisinhibition)_SUB_$(disinhibfraction)_inhibtunning_$(inhibfactor)_ifAAnotAB_$(ifAAnotAB)__dur$(T)msNblocks$(Nblocks)Ntrain$(Ntrain)lenstim$(lenstim)lenpause$(lenpause)Nreps$(Nreps)strength$(strength)wadapt$(ifwadapt)iSTDP$(ifiSTDP)RateAdjust$(adjustfactor)Time"
+filesavename = "Oddball_$(n_neurons)_SUB_$(disinhibfraction)_inhibtunning_$(inhibfactor)_ifAAnotAB_$(ifAAnotAB)__dur$(T)msNblocks$(Nblocks)Ntrain$(Ntrain)lenstim$(lenstim)lenpause$(lenpause)Nreps$(Nreps)strength$(strength)wadapt$(ifwadapt)iSTDP$(ifiSTDP)RateAdjust$(adjustfactor)Time"
 
 savefile = "../data/"*filesavename * datetime * tag
 println(savefile)
+
 
 # --------------------- initialise weights and assemblymembers -----------------------------------------
 
@@ -259,17 +203,23 @@ weights = initweights(weightpars(Ne = Ne, Ni = Ni))
 assemblymembers = initassemblymembers(Nassemblies = Nass,Ne = Ne)
 # inhibitory tuning
 inhibassemblies = initinhibassemblymembers(Nassemblies = Nass, Ne = Ne, Ni = Ni)
+
 winit = copy(weights) # make a copy of initial weights as weights are updated by simulation
+
+
+# ------------------ important assembly weight step -------------
 
 # Ensure SSA neuron 1 and 2 are both in assembly one and two
 if n_neurons == 200 # ensure really same amount of neurons
 	assemblymembers[1,:] .= -1
 	assemblymembers[2,:] .= -1
 end
+
 # ensure that for two assemblies n_neurons are equal
 assemblymembers[1,1:n_neurons] = collect(range(1,n_neurons))
 assemblymembers[2,1:n_neurons] = collect(range(1,n_neurons))
-assemblymembers = assemblymembers[1:2,:]
+assemblymembers = assemblymembers[1:2,:] # cut off everything else
+
 # correct to the true amount of assemblymembers
 Nass = size(assemblymembers)[1]
 
@@ -282,7 +232,6 @@ h5write(savefile, "initial/stimparams", stimparams)
 h5write(savefile, "initial/stimparams_prestim", stimparams_prestim)
 h5write(savefile, "initial/seqnumber", seqnumber)
 h5write(savefile, "initial/idxblockonset", blockonset)
-#h5write(savefile, "initial/weights", weights)
 h5write(savefile, "initial/assemblymembers", assemblymembers)
 h5write(savefile, "initial/inhibassemblies", inhibassemblies)
 

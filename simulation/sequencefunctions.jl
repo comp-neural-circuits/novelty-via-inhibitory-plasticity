@@ -652,16 +652,23 @@ end # function genstim
 
 
 function genstimparadigmnovelcont(stimulus; Nimg = 4, Nreps = 20, Nseq = 5, Nblocks = 1, stimstart = 1000, lenstim = 1000, lenpause = 3000, strength = 8)
-	# ensure that for each block there is a different novel image
+"""	generate the stimulation paradigm ensure that for each block there is a different novel image and
+that two consecutive blocks are never the same
+
+generate seq. violation stimulation paradigm
+ABCABCABC....ABN1ABC
+DEFDEFDEF....DEN2DEF
+XYZXYZXYZ...XYN3XYZ
+DEFDEFDEF....DEN4DEF
+ABCABCABC....ABN1ABC
+"""
+
 	firstimages = collect(1:Nimg:Nimg*Nseq)
 	novelimg = Nimg*Nseq + 1 # start counting from the first assembly after the core assemblies
 	novelrep = collect(Nimg*Nseq:Nimg*Nseq+Nimg).+1
 
-	# for img in firstimages
-	# 	stimulus = gennextsequence!(stimulus, img)
-	# end
+
 	storefirstimages = copy(firstimages)
-#	println("end $(storefirstimages[end])")
 	blockonset = []
 
 	for b = 1:Nblocks
@@ -673,7 +680,7 @@ function genstimparadigmnovelcont(stimulus; Nimg = 4, Nreps = 20, Nseq = 5, Nblo
 				novelimg += 1
 			end
 		else
-			#println("end $(storefirstimages[end])")
+			# ensure that the first images of two consecutive blocks differ
 			shuffleimg = shuffle(firstimages)
 			#println("begin $(shuffleimg[1])")
 			while shuffleimg[1] == storefirstimages[end] && Nseq > 1 # added Nseq larger 1 cause otgerwise always the same
