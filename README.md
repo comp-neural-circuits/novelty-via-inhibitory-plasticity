@@ -6,6 +6,7 @@ Auguste Schulz\*, Christoph Miehl\*, Michael J. Berry II, Julijana Gjorgjieva
 
 \* equal contribution  
 
+https://www.biorxiv.org/content/10.1101/2020.11.30.403840v1
 
 ## A spiking neural network model to investigate cortical novelty responses
 This project is concerned with the underlying mechanisms that give rise to novelty responses in sensory cortices. Stimulation paradigms were inspired by experiments performed in the primary visual cortex as reported in Homann et al., BioRxiv 2017 and in primary auditory cortex in Natan et al., eLife 2015.
@@ -54,10 +55,12 @@ Step into the `main` folder to run the initialisation files. Ensure that the cor
 
 #### For 1. the sequence violation paradigm,  
 run the following command
-- for the unique sequence paradigm (compare Figure 1)
+- for the unique sequence paradigm (compare Figure 1)  
+Nimg 3, Nreps 20, Nseq 10, Nblocks 1, lenstim 300, strength 12, Ntrain 5, adjustfactor 1.0, adaptive neurons false, inhibfactor 0.1  
 > nohup julia initsim_sequence_violation_ARGS.jl 3 20 10 1 300 12 5 10 0 10 &> ../tmp/standard_run_unique_sequence.txt &
 
-- for the repeated sequence paradigm (compare Figure 3,4, Suppl. Figure 1)
+- for the repeated sequence paradigm (compare Figure 3,4, Suppl. Figure 1)  
+Nimg 3, Nreps 20, Nseq 5, Nblocks 10, lenstim 300, strength 12, Ntrain 5, adjustfactor 1.0, adaptive neurons false, inhibfactor 0.1  
 > nohup julia initsim_sequence_violation_ARGS.jl 3 20 5 10 300 12 5 10 0 10 &> ../tmp/standard_run_repeated_sequence.txt &
 
 
@@ -78,14 +81,16 @@ In order to produce Fig. 6 D and E the code above was run 5 times for 8 varying 
 Visualisation and further processing steps are performed in jupyter notebooks.
 Specify the name of the file to be analysed in the respective notebooks.
 
-- for the unique sequence paradigm: Figure_1_
-- standard SSA oddball experiment : Figure_5_
-- standard SSA oddball experiment with disinhibition: Figure_6_
+Most Figures require running multiple simulations. 
+- for the unique sequence paradigm: Figure_Unique_Sequence.ipynb
+- standard SSA oddball experiment with disinhibition: Figure_odball_disinhibition.ipynb
 
+#### Figure generating notebooks 
 
 Note that some of the post processing steps performed in the notebooks are only compatible with certain stimulation parameters and or various other stimulation paradigms not specified here. Upon publication we will provide all accompanying figure generating data.
 
-In case you would like to generate all the figures shown in the paper, please send an email to ga84zah@mytum.de, we are happy to provide you with the corresponding datafiles, that would be too large to include in this repository.
+In case you would like to generate all the figures shown in the paper, please send an email to ga84zah@mytum.de, we are happy to provide you with the corresponding datafiles, that would be too large to include in this repository. 
+Further commenting and clean up will be made prior to publication to ensure reusability and reproducibility of all figures. 
 
 [1] A. Litwin-Kumar & B. Doiron.  Formation and maintenance of neuronal assemblies through synaptic plasticity.  Nature Communications (2014).  
 Copyright notice:  
