@@ -1,7 +1,7 @@
 # novelty-via-inhibitory-plasticity
 
-novelty-via-inhibitory-plasticity project code accompanying the manuscript:
-The generation of cortical novelty responses through inhibitory plasticity  
+novelty-via-inhibitory-plasticity project code accompanying the manuscript:  
+##### The generation of cortical novelty responses through inhibitory plasticity  
 Auguste Schulz\*, Christoph Miehl\*, Michael J. Berry II, Julijana Gjorgjieva   
 
 \* equal contribution  
