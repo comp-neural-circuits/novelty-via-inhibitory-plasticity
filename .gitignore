@@ -1,0 +1,8 @@
+/data/
+/tmp/
+/results/
+/postprocessing/.ipynb_checkpoints/*
+/simulation/.ipynb_checkpoints/*
+postprocessing/helper/__pycache__/*
+postprocessing/__pycache__/
+
