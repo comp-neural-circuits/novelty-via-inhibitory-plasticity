@@ -47,7 +47,7 @@ Further running instructions:
 Run the following commands from a Ubuntu command line (tested on Ubuntu 18.04).
 The arguments set the sequence and stimulation parameters and enable flexible testing of different parameters.
 
-Step into the `main` folder to run the initialisation files.
+Step into the `main` folder to run the initialisation files. Ensure that the correct version of Julia including the required packages are installed and that the Julia path is specified. 
 
 #### For 1. the sequence violation paradigm,  
 run the following command
