@@ -9,6 +9,7 @@
 # * equal contribution
 #
 ##############################################################################
+
 # ----------------------------------------------------------------------------------------
 # initialise the simulation parameters and start the simulation
 # input: stim params

@@ -11,7 +11,8 @@
 ##############################################################################
 
 # ----------------------------------------------------------------------------------------
-# initialise the simulation parameters and start the simulation
+# initialise the simulation parameters and start the simulation take run parameters
+# via command line
 # input: stim params
 # output: hdf5 file with stimulus parameters, run results (weight matrices, spiketimes, total number of spikes)
 # ----------------------------------------------------------------------------------------
@@ -50,13 +51,14 @@ dt 	= 0.1 #integration timestep in ms
 ifiSTDP = true 		#  include inhibitory plasticity
 ifwadapt = false	#  consider AdEx or Ex IF neurons
 
+
 # --------------------- generate the stimulus --------------------------------------------
 
 # In case this file is not run from the command line specify the ARGS list of strings
 #ARGS = ["20", "1", "300", "900", "200", "0", "10", "150]
 
 # stimulus parameters
-Nimg = 1		# number of images per sequence
+Nimg = 1		# number of stimuli per sequence
 Nreps = parse(Int64, ARGS[1])		# number of repetitions per sequence cycle
 Nseq = 1		# number of sequences
 Nblocks = parse(Int64, ARGS[2])	# number of sequence block repetitions
