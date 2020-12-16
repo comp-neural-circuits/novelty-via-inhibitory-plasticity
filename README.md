@@ -24,6 +24,8 @@ Required packages:
 4. Dates
 5. LinearAlgebra
 6. Random
+7. Profile
+8. StatsBase
 
 Packages can be installed via `using Pkg` `Pkg.add("PackageName")`.  
 
