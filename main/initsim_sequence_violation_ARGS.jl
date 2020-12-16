@@ -73,9 +73,6 @@ strength = strengthpre					# strength of the stimulation in kHz added to baselin
 Ntrain = parse(Int64, ARGS[7])			# number of pretraining iterations
 Nass = (Nimg) * Nseq +  Nseq * Nblocks    # total number of assemblies Nimg * Nseq + all novelty assemblies
 
-stimparams = [Nimg, Nreps, Nseq, Nblocks, stimstart, lenstim, lenpause, strength] # store stimulus param array in hdf5 file
-stimparams_prestim = [Nimg, Nreps, Nseq, Nblocks, stimstart, lenstim, lenpause, strength, lenstimpre, lenpausepre, strengthpre, Ntrain] # store stimulus param array in hdf5 file
-
 # adjustment of learning rates
 adjustfactor = parse(Int64, ARGS[8])/10
 adjustfactorinhib = adjustfactor # ensure they are equal for inhibitory and exc. plasticity
@@ -89,6 +86,9 @@ end
 inhibfactor = parse(Int64, ARGS[10])/100 # 100 more refined steering possibility to just switch it off
 
 
+stimparams = [Nimg, Nreps, Nseq, Nblocks, stimstart, lenstim, lenpause, strength] # store stimulus param array in hdf5 file
+stimparams_prestim = [Nimg, Nreps, Nseq, Nblocks, stimstart, lenstim, lenpause, strength, lenstimpre, lenpausepre, strengthpre, Ntrain] # store stimulus param array in hdf5 file
+
 # initialise stimulus array
 stimulus = zeros(1, 4)	# initialisation of the stimulus
 # nohup julia initsim_sequence_violation_ARGS.jl 3 20 5 10 300 12 5 10 0 10 &> ../tmp/Pre5_Final_Run_Block_nonadapt_10_inhibtuning_nohetero_tunefactor_10_shortpretrain.txt &
@@ -101,13 +101,13 @@ tag = "repseq.h5"
 
 
 # specify aspects of the stimulation paradigm
-withnovelty = true 		# novelty response
-pretrainig = true		# include pretraining phase
+withnovelty 	= true 	# novelty response
+pretrainig 		= true	# include pretraining phase
 
 # ----------- standard setting when the following three false -----------------
-shuffledstim = false	# shuffle the stimulus randomly
-lastshuffled = false	# shuffle the last two stimuli
-reducednovelty = false	# reduce the stimulation strength of the novel stimulus
+shuffledstim 	= false	# shuffle the stimulus randomly
+lastshuffled 	= false	# shuffle the last two stimuli
+reducednovelty 	= false	# reduce the stimulation strength of the novel stimulus
 
 
 if withnovelty
@@ -235,7 +235,7 @@ println("Simulation run time: $T")
 # initialise savefile and avoid overwriting when identical parameters are used
 datetime = Dates.format(Dates.now(), "yyyy-mm-dd-HH-MM-SS")
 
-filesavename = "Seq_Violation_$(inhibfactor)_dur$(T)msNblocks$(Nblocks)Ntrain$(Ntrain)lenstim$(lenstim)lenpause$(lenpause)Nreps$(Nreps)strength$(strength)wadapt$(ifwadapt)iSTDP$(ifiSTDP)RateAdjust$(adjustfactor)Time"
+filesavename = "seq_violation_$(inhibfactor)_dur$(T)msNblocks$(Nblocks)Ntrain$(Ntrain)lenstim$(lenstim)lenpause$(lenpause)Nreps$(Nreps)strength$(strength)wadapt$(ifwadapt)iSTDP$(ifiSTDP)RateAdjust$(adjustfactor)Time"
 
 savefile = "../data/"*filesavename * datetime * tag
 println(savefile)

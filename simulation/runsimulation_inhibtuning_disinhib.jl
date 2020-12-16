@@ -19,7 +19,7 @@ function runsimulation_inhibtuning_disinhib(ifiSTDP,ifwadapt,stimparams,stimulus
 	storagetimes::Array{Int64,1}, savefile::String, lenpretrain,
 	inhibassemblies::Array{Int64,2}; dt = 0.1, T = 2000,
 	adjustfactor = 1, adjustfactorinhib=1, inhibtuing = true, inhibfactor = 0.1,
-	disinhib = true, disinhibfraction =  0.5, ifAAnotAB=false)
+	disinhibsubtract =  0.0, ifAAnotAB=false)
 
 	"""	Runs a new simulation of a plastic E-I spiking neural network model where both E and I
 		neurons receive tuned input with disinhibition during a novel or rare stimulus
@@ -43,8 +43,7 @@ function runsimulation_inhibtuning_disinhib(ifiSTDP,ifwadapt,stimparams,stimulus
 			adjustfactorinhib float: adjust factor of the I-to-E plasticity after pretraining to allow for switching off plasticity
 			inhibtuing boolean: if inhibitory neurons are tuned to stimuli as well
 			inhibfactor float: the scaling factor by how much the inhibitory neurons are driven by an external stimulus compared to the excitatory tuned neurons
-			disinhib boolean: if disinhibition active or not
-			disinhibfraction float: amount of reduction of the excitatory input to the inhibitory populatoin
+			disinhibsubtract float: amount of reduction of the excitatory input to the inhibitory populatoin
 			ifAAnotAB boolean: if always just the same stimulus is shown (same E and "I" assemblies stimulated) or B instead of A as rare stimulus
 		Output:
 
@@ -356,7 +355,7 @@ function runsimulation_inhibtuning_disinhib(ifiSTDP,ifwadapt,stimparams,stimulus
 							# include disinhibition for rare or deviant stimulus
 							if round(Int,stimulus[ss,1]) > 1 && ss > 14 # hard code > 14 that only last B will get disinhibition even if pretraining
 								# disinhibition: reduce excitatory input drive to inhibitory neurons I activity goes down -> E goes up (disinhibited)
-								rx[Ne+1:end] .-= disinhibfraction # dont make it a fraction but absolute numbers
+								rx[Ne+1:end] .-= disinhibsubtract
 							end
 								memsinhib = inhibassemblies[ass,inhibassemblies[ass,:] .!= -1]
 								rx[memsinhib] .+= stimulus[ss,4]*inhibfactor
@@ -385,7 +384,7 @@ function runsimulation_inhibtuning_disinhib(ifiSTDP,ifwadapt,stimparams,stimulus
 						# ---------------------- inhibtuning & disinhibition --------------------
 						if inhibtuing
 							if round(Int,stimulus[ss,1]) > 1 && ss > 14
-								rx[Ne+1:end] .+= disinhibfraction # dont make it a fraction but absolute numbers
+								rx[Ne+1:end] .+= disinhibsubtract
 							end
 								memsinhib = inhibassemblies[ass,inhibassemblies[ass,:] .!= -1]
 								rx[memsinhib] .-= stimulus[ss,4]*inhibfactor

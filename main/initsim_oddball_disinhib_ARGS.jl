@@ -71,11 +71,11 @@ lenpause = lenpausepre					# duration of no stimulation between two images in ms
 strength = strengthpre					# strength of the stimulation in kHz added to baseline input
 Ntrain = 0								# number of pretraining iterations
 Nass = (Nimg) * Nseq +  Nseq * Nblocks  # total number of assemblies Nimg * Nseq + all novelty assemblies
+n_neurons = parse(Int64, ARGS[5])		# number of neurons driven by stimulus A and B
+ifAAnotAB = false 						# set false if AAAABA shown not AAAAAA
 
-n_neurons = parse(Int64, ARGS[5])
-SSA = false
+# select if pretraining or not
 pretrainig = false
-
 if parse(Int64, ARGS[6]) == 1
 	pretrainig = true
 end
@@ -84,67 +84,51 @@ end
 inhibfactor = parse(Int64, ARGS[7])/100 # higher resolution
 #inhibfactor = 0.1
 
-# increase in inhibitory assembly heterosynaptic decrease in the input
-ifAAnotAB = false # set false if AB shown not AA for pure release of disinhibition
-
-stimparams = [Nimg, Nreps, Nseq, Nblocks, stimstart, lenstim, lenpause, strength] # store stimulus param array in hdf5 file
-stimparams_prestim = [Nimg, Nreps, Nseq, Nblocks, stimstart, lenstim, lenpause, strength, lenstimpre, lenpausepre, strengthpre, Ntrain] # store stimulus param array in hdf5 file
-
-# adjustment of learning rates
-adjustfactor = 1
-adjustfactorinhib = adjustfactor
-
-
 # ------------------- disinhibition specific ----------------------
-# switch on disinhibition
-ifdisinhibition = true
-
 # strength of the disinhibition
-# not actually a fraction will be subtracted in the same way as the added inhib tuning
-disinhibfraction = parse(Int64, ARGS[8])/100
+# will be subtracted in the same way as the added inhib tuning
+disinhibsubtract = parse(Int64, ARGS[8])/100
 
-# Nreps 20 Nblocks 1 lenstim 300 lenpause 900 Nneurons 200 pretrain false inhibfactor 0.1 disinhibfraction 1.5
+
+# Explanations of command line parameters
+# Nreps 20 Nblocks 1 lenstim 300 lenpause 900 Nneurons 200 pretrain false inhibfactor 0.1 disinhibsubtract 1.5
 # nohup julia initsim_oddball_disinhib_ARGS.jl 20 1 300 900 200 0 10 150 &> ../tmp/SSA_disinhibition_strength_150.txt &
 
 
+# generate arrays to be saved with stimulus parameters
+stimparams = [Nimg, Nreps, Nseq, Nblocks, stimstart, lenstim, lenpause, strength] # store stimulus param array in hdf5 file
+stimparams_prestim = [Nimg, Nreps, Nseq, Nblocks, stimstart, lenstim, lenpause, strength, lenstimpre, lenpausepre, strengthpre, Ntrain] # store stimulus param array in hdf5 file
+
+
+# initialise stimulus ----------------------------------
 stimulus = zeros(1, 4)	# initialisation of the stimulus
 initstim = true # if inital stimulus
-if initstim
-	stimulus = [1.0 1000.0 1300.0 12.0; 2.0 2000.0 2300.0 12.0;1.0 3100.0 3100.0 0] # show that initially firing rates equal
-end # add dummy to ensure stimulation start at 4000
-tag = "repseq.h5"
+
+# add dummy stimulus with 0 strength to ensure stimulation start at 4000
 stimulus = [1.0 1000.0 1300.0 0; 2.0 2000.0 2300.0 0;1.0 4000.0-(lenpause) 4000.0-(lenpause) 0]
 
-#stimulus = genstimparadigmpretraining(stimulus, Nass = Nass, Ntrain = Ntrain, stimstart = stimstart, lenstim = lenstimpre, lenpause = lenpausepre, strength = strengthpre)
-#println(stimulus)
 lenpretrain = size(stimulus,1) # returns one if empty
-println("SSA")
-#include("../simulation/sequencefunctions.jl")
 
-#stimulus, blockonset = genstimparadigmssa(stimulus, Nimg = Nimg, Nreps = Nreps, Nseq = Nseq, Nblocks = Nblocks, stimstart = stimstart, lenstim = lenstim, lenpause = lenpause, strength = strength )
-#tag = "SSA_nopretrain.h5"
+tag = "repseq.h5"
+
 
 if pretrainig
-	#println(stimulus)
 	stimulus = genstimparadigmpretraining(stimulus, Nass = Nass, Ntrain = Ntrain, stimstart = stimstart, lenstim = lenstimpre, lenpause = lenpausepre, strength = strengthpre)
-	#println(stimulus)
 	lenpretrain = size(stimulus,1)
 end
-if SSA
-	println("SSA")
-	stimulus, blockonset = genstimparadigmssanew(stimulus, Nimg = Nimg, Nreps = Nreps, Nseq = Nseq, Nblocks = Nblocks, stimstart = stimstart, lenstim = lenstim, lenpause = lenpause, strength = strength )
-	tag = "SSA.h5"
-else
-	println("gen via novelcont")
-	stimulus, blockonset = genstimparadigmnovelcont(stimulus, Nimg = Nimg, Nreps = Nreps, Nseq = Nseq, Nblocks = Nblocks, stimstart = stimstart, lenstim = lenstim, lenpause = lenpause, strength = strength )
-	tag = "repeatedsequences.h5"
-end
 
-# TODO: fix issue with lenpretrain setting it to zero and back
+
+# make stimulation paradigm (via novel stimulus paradigm 1 1 1 1 1 1 2 1)
+stimulus, blockonset = genstimparadigmnovelcont(stimulus, Nimg = Nimg, Nreps = Nreps, Nseq = Nseq, Nblocks = Nblocks, stimstart = stimstart, lenstim = lenstim, lenpause = lenpause, strength = strength )
+tag = "repeatedsequences.h5"
+
+
+# TODO: make more elegant by not setting it to zero and back
 # set length of pretraining to 0 if no pretraining all rest of indexing depends on it to be zero
 if Ntrain == 0 && !initstim
 	lenpretrain = 0
 end
+
 # get sequence order
 blockidx = collect(lenpretrain + 1:Nreps*Nimg:size(stimulus,1)) # get all stimulus indices when a new sequence starts
 seqnumber = stimulus[blockidx,1]
@@ -152,9 +136,9 @@ for n = 2:Nseq
     seqnumber[seqnumber .== (1 + (n-1)*Nimg)] .= n
 end
 
-# ------------------ important oddball paradigm step -------------
 
-# replace all novel images by 2
+# ------------------ important oddball paradigm step -------------
+# replace all novel images by 2 we want to just have A and B stimuli here no novel stimuli
 stimulus[stimulus[:,1].>1,1] .= 2
 swap_stim = blockidx[floor(Int8,length(blockidx)./2)+1]
 
@@ -190,7 +174,7 @@ println("Simulation run time: $T")
 # initialise savefile and avoid overwriting when identical parameters are used
 datetime = Dates.format(Dates.now(), "yyyy-mm-dd-HH-MM-SS")
 
-filesavename = "Oddball_$(n_neurons)_SUB_$(disinhibfraction)_inhibtunning_$(inhibfactor)_ifAAnotAB_$(ifAAnotAB)__dur$(T)msNblocks$(Nblocks)Ntrain$(Ntrain)lenstim$(lenstim)lenpause$(lenpause)Nreps$(Nreps)strength$(strength)wadapt$(ifwadapt)iSTDP$(ifiSTDP)RateAdjust$(adjustfactor)Time"
+filesavename = "oddball_$(n_neurons)_SUB_$(disinhibsubtract)_inhibtunning_$(inhibfactor)_ifAAnotAB_$(ifAAnotAB)__dur$(T)msNblocks$(Nblocks)Ntrain$(Ntrain)lenstim$(lenstim)lenpause$(lenpause)Nreps$(Nreps)strength$(strength)wadapt$(ifwadapt)iSTDP$(ifiSTDP)Time"
 
 savefile = "../data/"*filesavename * datetime * tag
 println(savefile)
@@ -264,22 +248,22 @@ if Ntrain == 0 && !initstim # switch lenpretrain to 1 again as rest of simulatio
 	lenpretrain = 1
 end
 # --------------------- run simulation ---------------------------------------------------------------
+
 # precompile simulation function (speed up) T = 1
 @time runsimulation_inhibtuning_disinhib(ifiSTDP,ifwadapt,stimparams,stimulus, weights, assemblymembers, spiket, storagedec,
- storagetimes,savefile, lenpretrain, inhibassemblies, adjustfactor = adjustfactor,
-  adjustfactorinhib = adjustfactorinhib, inhibfactor = inhibfactor, disinhib = ifdisinhibition,
-   disinhibfraction =  disinhibfraction, ifAAnotAB = false, T =1)
+storagetimes,savefile, lenpretrain, inhibassemblies, inhibfactor = inhibfactor,
+disinhibsubtract =  disinhibsubtract, ifAAnotAB = ifAAnotAB, T =1)
+
+
 # run main simulation
 @time totalspikes = runsimulation_inhibtuning_disinhib(ifiSTDP,ifwadapt,stimparams,stimulus, weights,
- assemblymembers, spiket, storagedec, storagetimes, savefile,lenpretrain,inhibassemblies,
-  adjustfactor = adjustfactor, adjustfactorinhib = adjustfactorinhib,inhibfactor = inhibfactor,
- disinhib = ifdisinhibition, disinhibfraction =  disinhibfraction,
- ifAAnotAB = ifAAnotAB, T = T)
+assemblymembers, spiket, storagedec, storagetimes, savefile,lenpretrain,inhibassemblies, inhibfactor = inhibfactor,
+disinhibsubtract =  disinhibsubtract, ifAAnotAB = ifAAnotAB, T = T)
 
 # ---------------------- store final params ---------------------------------------------------------
-#h5write(savefile, "postsim/weights", weights)
 h5write(savefile, "postsim/spiketimes", spiket)
 h5write(savefile, "postsim/totalspikes", totalspikes)
 
 
+# start evaluation
 include("initevalimmediate.jl") # runs the file initiating the immediate evaluation
