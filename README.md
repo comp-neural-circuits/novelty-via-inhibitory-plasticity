@@ -90,7 +90,7 @@ Figure_oddball_paradigm.ipynb
 
 #### Figure generating notebooks
 
-Note that at the moment, some of the post processing steps performed in the notebooks might only compatible with certain stimulation parameters and or various other stimulation paradigms not specified here.
+Note that at the moment, some of the post processing steps performed in the notebooks might only be compatible with certain stimulation parameters and or various other stimulation paradigms not specified here.
 
 Upon publication we will provide all data accompanying the figures.  
 
