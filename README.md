@@ -81,11 +81,12 @@ In order to produce Fig. 6 D and E the code above was run 5 times for 8 varying 
 Visualisation and further processing steps are performed in jupyter notebooks.
 Specify the name of the file to be analysed in the respective notebooks.
 
-- for the unique sequence paradigm: Figure_1_
-- standard SSA oddball experiment : Figure_5_
-- standard SSA oddball experiment with disinhibition: Figure_6_
+Most Figures require running multiple simulations. 
+- for the unique sequence paradigm: Figure_Unique_Sequence.ipynb
+- standard SSA oddball experiment : Figure_Odball.ipynb
+- standard SSA oddball experiment with disinhibition: Figure_odball_disinhibition.ipynb
 
-#### Data generating notebooks 
+#### Figure generating notebooks 
 
 Note that some of the post processing steps performed in the notebooks are only compatible with certain stimulation parameters and or various other stimulation paradigms not specified here. Upon publication we will provide all accompanying figure generating data.
 
