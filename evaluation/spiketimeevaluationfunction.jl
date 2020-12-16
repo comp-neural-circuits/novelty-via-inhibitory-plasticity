@@ -1,3 +1,14 @@
+##############################################################################
+#
+# This code is part of the publication:
+# https://www.biorxiv.org/content/10.1101/2020.11.30.403840v1
+#
+# The generation of cortical novelty responses through inhibitory plasticity
+# Auguste Schulz*, Christoph Miehl*, Michael J. Berry II, Julijana Gjorgjieva
+#
+# * equal contribution
+#
+##############################################################################
 function spiketimeevaluationfunction(filelocation,fname, flags::String; pst = 0.1, storedweights = false, storedspiketimes = true, sporderedt = true, Nt = 25, savefigures = true, showfigures = false, savematrices = true, binsize = 800)
 	"""
 	evaluate stored spike times and calculate the population averages

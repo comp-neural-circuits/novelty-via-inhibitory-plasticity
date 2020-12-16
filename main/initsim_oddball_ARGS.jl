@@ -1,4 +1,15 @@
-# this file is part of the V1 2Ch Predictive Code project
+##############################################################################
+#
+# This code is part of the publication:
+# https://www.biorxiv.org/content/10.1101/2020.11.30.403840v1
+#
+# The generation of cortical novelty responses through inhibitory plasticity
+# Auguste Schulz*, Christoph Miehl*, Michael J. Berry II, Julijana Gjorgjieva
+#
+# * equal contribution
+#
+##############################################################################
+
 # ----------------------------------------------------------------------------------------
 # initialise the simulation parameters and start the simulation
 # input: stim params

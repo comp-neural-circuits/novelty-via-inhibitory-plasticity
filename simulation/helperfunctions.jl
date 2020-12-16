@@ -1,3 +1,15 @@
+##############################################################################
+#
+# This code is part of the publication:
+# https://www.biorxiv.org/content/10.1101/2020.11.30.403840v1
+#
+# The generation of cortical novelty responses through inhibitory plasticity
+# Auguste Schulz*, Christoph Miehl*, Michael J. Berry II, Julijana Gjorgjieva
+#
+# * equal contribution
+#
+##############################################################################
+
 """ helper functions
 	- weight initialisation
 	- excitatory and inhibitory stimulus tuning (referred to assembly initialisation)
