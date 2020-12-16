@@ -83,7 +83,6 @@ Specify the name of the file to be analysed in the respective notebooks.
 
 Most Figures require running multiple simulations. 
 - for the unique sequence paradigm: Figure_Unique_Sequence.ipynb
-- standard SSA oddball experiment : Figure_Odball.ipynb
 - standard SSA oddball experiment with disinhibition: Figure_odball_disinhibition.ipynb
 
 #### Figure generating notebooks 
