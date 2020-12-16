@@ -15,7 +15,7 @@ We set up a spiking neural network model of the mouse primary sensory cortex (80
 
 Some of the simulation code follows code provided by Litwin-Kumar and Doiron [1].
 
-The simulation code is written in Julia (https://julialang.org/, https://github.com/JuliaLang/julia) (Version 1.0.1). 
+The simulation code is written in Julia (https://julialang.org/, https://github.com/JuliaLang/julia) (Version 1.0.1).
 
 Required packages:
 
@@ -51,7 +51,7 @@ Further running instructions:
 Run the following commands from a Ubuntu command line (tested on Ubuntu 18.04).
 The arguments set the sequence and stimulation parameters and enable flexible testing of different parameters.
 
-Step into the `main` folder to run the initialisation files. Ensure that the correct version of Julia including the required packages are installed and that the Julia path is specified. 
+Step into the `main` folder to run the initialisation files. Ensure that the correct version of Julia including the required packages are installed and that the Julia path is specified.
 
 #### For 1. the sequence violation paradigm,  
 run the following command
@@ -81,16 +81,23 @@ In order to produce Fig. 6 D and E the code above was run 5 times for 8 varying 
 Visualisation and further processing steps are performed in jupyter notebooks.
 Specify the name of the file to be analysed in the respective notebooks.
 
-Most Figures require running multiple simulations. 
-- for the unique sequence paradigm: Figure_Unique_Sequence.ipynb
-- standard SSA oddball experiment with disinhibition: Figure_odball_disinhibition.ipynb
+To test if the simulations were successful we provide two example notebooks
 
-#### Figure generating notebooks 
+- for the unique sequence paradigm:   Figure_sequence_violation.ipynb
+- oddball experiment:  
+Figure_oddball_paradigm.ipynb
 
-Note that some of the post processing steps performed in the notebooks are only compatible with certain stimulation parameters and or various other stimulation paradigms not specified here. Upon publication we will provide all accompanying figure generating data.
+#### Figure generating notebooks
 
-In case you would like to generate all the figures shown in the paper, please send an email to ga84zah@mytum.de, we are happy to provide you with the corresponding datafiles, that would be too large to include in this repository. 
-Further commenting and clean up will be made prior to publication to ensure reusability and reproducibility of all figures. 
+Note that some of the post processing steps performed in the notebooks are only compatible with certain stimulation parameters and or various other stimulation paradigms not specified here.   
+
+Upon publication we will provide all accompanying figure generating data.  
+
+In case you would like to generate all the figures shown in the paper, please send an email to ga84zah@mytum.de, we are happy to provide you with the corresponding datafiles. They are too large to include in this repository.
+
+Further commenting and clean up will be made prior to publication to ensure reusability and reproducibility.
+
+
 
 [1] A. Litwin-Kumar & B. Doiron.  Formation and maintenance of neuronal assemblies through synaptic plasticity.  Nature Communications (2014).  
 Copyright notice:  
