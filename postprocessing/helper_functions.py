@@ -1,3 +1,16 @@
+##############################################################################
+#
+# This code is part of the publication:
+# https://www.biorxiv.org/content/10.1101/2020.11.30.403840v1
+#
+# The generation of cortical novelty responses through inhibitory plasticity
+# Auguste Schulz*, Christoph Miehl*, Michael J. Berry II, Julijana Gjorgjieva
+#
+# * equal contribution
+#
+##############################################################################
+
+
 from IPython.display import HTML, IFrame, Image
 
 import numpy as np
@@ -2122,7 +2135,9 @@ def plot_Nreps_baseline(Nreps, params, params_blockavg, Nblocks = 10, ifxlims = 
 #
 #     return novelty_avg, novelty, mean_novelty, std_novelty, novelty_avgidx, noveltyidx
 
-def get_peak_height(edges,datalist, meandatalist, lenstim, lenpause, Nreps, Nimg, Nblocks, iftransientpre = False, iftransientpost = False, ifseqlen=False, ifrepseq = False, avgindices = 20, Nseq = 5, startimg = 4, idxconv = 4, search_margin = 20):
+def get_peak_height(edges,datalist, meandatalist, lenstim, lenpause, Nreps, Nimg, Nblocks,
+ iftransientpre = False, iftransientpost = False, ifseqlen=False, ifrepseq = False,
+  avgindices = 20, Nseq = 5, startimg = 4, idxconv = 4, search_margin = 20):
     """ get the novelty firing rate by finding the maximum value around novelty time
     in averaged traces and each block trace individually
     determine the avg and std of the individual trace novelty values
@@ -2234,62 +2249,12 @@ def get_peak_height(edges,datalist, meandatalist, lenstim, lenpause, Nreps, Nimg
     std_novelty = np.std(novelty, axis = 1)
 
     # plot one example to check if it works fine
-    plt.figure()
-    plt.plot(meandatalist[Nseq-1])
-    plt.plot(novelty_avgidx[Nseq-1], novelty_avg[Nseq-1], "x")
+    # plt.figure()
+    # plt.plot(meandatalist[Nseq-1])
+    # plt.plot(novelty_avgidx[Nseq-1], novelty_avg[Nseq-1], "x")
 
     return novelty_avg, novelty, mean_novelty, std_novelty, novelty_avgidx, noveltyidx
 
-# def get_peak_height(edges,datalist, meandatalist, lenstim, lenpause, Nreps, Nimg, Nblocks, iftransientpre = False, iftransientpost = False, avgindices = 20, startimg = 4, idxconv = 4, search_margin = 20):
-#     """ get the novelty firing rate by finding the maximum value around novelty time
-#     in averaged traces and each block trace individually
-#     determine the avg and std of the individual trace novelty values
-#
-#     switch between novelty, pre novelty transient and post novelty transient peaks
-#     default = novelty peak
-#     iftransientpre pre novelty peak
-#     iftransientpost post novelty peak"""
-#
-#     Nseq = len(Nreps)
-#     novelty = np.zeros((Nseq,Nblocks))
-#     novelty_avg = np.zeros(Nseq)
-#     t_before_nov = np.zeros(Nseq)
-#     noveltyidx = np.zeros((Nseq,Nblocks))
-#     novelty_avgidx = np.zeros(Nseq)
-#     idxmin = np.zeros(Nseq).astype(int) # cut off index before novelty
-#     #t_start_img = startimg*(lenstim+lenpause)/1000.
-#
-#     for rep in range(1,Nseq + 1):
-#         # define region to search depending on condition pre, post, novelty
-#         if iftransientpre:
-#             t_before_nov[rep-1] = ((Nimg-0.5)*(lenstim+lenpause))/1000. # middle of last image in current sequence
-#             #search_margin = 1
-#         elif iftransientpost:
-#             t_before_nov[rep-1] = (Nreps[rep-1]*Nimg*(lenstim+lenpause) + (Nimg-0.5)*(lenstim+lenpause))/1000. # middle of last image in new sequence
-#             #search_margin = 1
-#         else:
-#             t_before_nov[rep-1] = ((Nreps[rep-1]-2)*Nimg*(lenstim+lenpause) + (Nimg-0.5)*(lenstim+lenpause))/1000. # middle of novelty image
-#             #print("novelty")
-#         #print(t_before_nov[rep-1])
-#         idxmin[rep-1] = np.argmax(edges[rep-1]>t_before_nov[rep-1])
-#         novelty_avgidx[rep-1] = np.argmax(meandatalist[rep-1][max(0,idxmin[rep-1]-search_margin):min(len(meandatalist[rep-1]),idxmin[rep-1]+search_margin)]) + max(0,idxmin[rep-1]-search_margin)
-#         novelty_avg[rep-1] = max(meandatalist[rep-1][max(0,idxmin[rep-1]-search_margin):min(len(meandatalist[rep-1]),idxmin[rep-1]+search_margin)])
-#
-#         #novelty_avg[rep-1] = np.mean(meandatalist[rep-1][max(idxconv,idxmin[rep-1]-avgindices):idxmin[rep-1]])
-#         for bl in range(1, Nblocks + 1):
-#             noveltyidx[rep-1][bl-1] = np.argmax(datalist[rep-1][bl-1,max(0,idxmin[rep-1]-search_margin):min(len(meandatalist[rep-1]),idxmin[rep-1]+search_margin)]) + max(0,idxmin[rep-1]-search_margin)
-#             novelty[rep-1][bl-1] = max(datalist[rep-1][bl-1,max(0,idxmin[rep-1]-search_margin):min(len(meandatalist[rep-1]),idxmin[rep-1]+search_margin)])
-#
-#     mean_novelty = np.mean(novelty, axis = 1)
-#     std_novelty = np.std(novelty, axis = 1)
-#
-#     # plot one example to check if it works fine
-#     plt.figure()
-#     plt.plot(meandatalist[Nseq-1])
-#     plt.plot(novelty_avgidx[Nseq-1], novelty_avg[Nseq-1], "x")
-#
-#     return novelty_avg, novelty, mean_novelty, std_novelty, novelty_avgidx, noveltyidx
-#
 
 
 

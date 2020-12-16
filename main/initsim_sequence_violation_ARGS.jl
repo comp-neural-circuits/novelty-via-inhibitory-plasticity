@@ -43,7 +43,9 @@ ifwadapt = false	#  consider AdEx or Ex IF neurons
 # --------------------- generate the stimulus --------------------------------------------
 
 # In case this file is not run from the command line specify the ARGS list of strings
-#ARGS = ["3", "20", "10", "1","300", "12", "5", "10", "0", "10"]
+# Nimg 3, Nreps 20, Nseq 10, Nblocks 1, lenstim 300, strength 12, Ntrain 5, adjustfactor 1.0, adaptive neurons false, inhibfactor 0.1
+# ARGS = ["3", "20", "10", "1","300", "12", "5", "10", "0", "10"] # unique sequences
+# ARGS = ["3", "20", "5", "10","300", "12", "5", "10", "0", "10"] # repeated sequences
 
 # stimulus parameters
 Nimg = parse(Int64, ARGS[1])		# number of stimuli per sequence

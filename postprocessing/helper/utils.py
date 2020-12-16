@@ -1,7 +1,14 @@
-# Jonas Braun
-# jonas.braun@tum.de
-# 19.07.2019
-
+##############################################################################
+#
+# This code is part of the publication:
+# https://www.biorxiv.org/content/10.1101/2020.11.30.403840v1
+#
+# The generation of cortical novelty responses through inhibitory plasticity
+# Auguste Schulz*, Christoph Miehl*, Michael J. Berry II, Julijana Gjorgjieva
+#
+# * equal contribution
+#
+##############################################################################
 import os
 import time
 import datetime
@@ -336,4 +343,3 @@ def save_results_inpdf(myANs, names, list_abbrvs, folder, filename="results", pa
     merger.write(path+".pdf")
     merger.close()
     [os.remove(path+"{}.pdf".format(i)) for i in range(len(list_abbrvs))]
-

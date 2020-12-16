@@ -40,7 +40,7 @@ ifwadapt = false	#  consider AdEx or Ex IF neurons
 # --------------------- generate the stimulus --------------------------------------------
 
 # In case this file is not run from the command line specify the ARGS list of strings
-#ARGS = ["20", "1", "300", "900", "200", "0", "10"]
+ARGS = ["20", "1", "300", "900", "200", "0", "10"]
 
 # stimulus parameters
 Nimg = 1		# number of images per sequence
