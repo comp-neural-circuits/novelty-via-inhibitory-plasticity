@@ -60,7 +60,7 @@ run the following command
 
 #### For 2. the oddball paradigm,  
 run the following command
-- for the standard SSA oddball experiment without disinhibition (compare Figure 5)
+- for the standard SSA oddball experiment without disinhibition (compare Figure 5)  
 Nreps 20, Nblocks 1, lenstim 300, lenpause 900, Nneurons 200, pretrain false, inhibfactor 0.1  
 > nohup julia initsim_oddball_ARGS.jl 20 1 300 900 200 0 10 &> ../tmp/SSA_standard_condition.txt &
 
