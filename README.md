@@ -54,10 +54,12 @@ Step into the `main` folder to run the initialisation files. Ensure that the cor
 
 #### For 1. the sequence violation paradigm,  
 run the following command
-- for the unique sequence paradigm (compare Figure 1)
+- for the unique sequence paradigm (compare Figure 1)  
+Nimg 3, Nreps 20, Nseq 10, Nblocks 1, lenstim 300, strength 12, Ntrain 5, adjustfactor 1.0, adaptive neurons false, inhibfactor 0.1  
 > nohup julia initsim_sequence_violation_ARGS.jl 3 20 10 1 300 12 5 10 0 10 &> ../tmp/standard_run_unique_sequence.txt &
 
-- for the repeated sequence paradigm (compare Figure 3,4, Suppl. Figure 1)
+- for the repeated sequence paradigm (compare Figure 3,4, Suppl. Figure 1)  
+Nimg 3, Nreps 20, Nseq 5, Nblocks 10, lenstim 300, strength 12, Ntrain 5, adjustfactor 1.0, adaptive neurons false, inhibfactor 0.1  
 > nohup julia initsim_sequence_violation_ARGS.jl 3 20 5 10 300 12 5 10 0 10 &> ../tmp/standard_run_repeated_sequence.txt &
 
 
