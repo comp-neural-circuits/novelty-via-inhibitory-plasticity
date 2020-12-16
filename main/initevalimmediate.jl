@@ -1,4 +1,6 @@
-# this file is part of the V1 2Ch Predictive Code project
+# this file is part of the novelty-via-inhibitory-plasticity project
+# author: Auguste Schulz 
+#
 # ----------------------------------------------------------------------------------------
 # initialise the evaluation right after the simulation for easier post processing
 # input: file name, weight or spiketimeevaluation

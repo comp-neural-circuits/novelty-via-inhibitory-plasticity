@@ -6,10 +6,6 @@
 # ----------------------------------------------------------------------------------------
 
 
-# if using atom and open folder function go into main folder
-#cd("./main/")
-
-
 # include inbuilt modules
 using PyCall
 using PyPlot
@@ -20,12 +16,8 @@ using Dates
 using LinearAlgebra
 using Random
 using Distributed
-#using Revise
-#using Profile
 
-println(pwd())
-# enable or disable certain functions
-plotting            = false  # make plots
+
 
 # --------------------- include functions  ------------------------------------------------
 # include runs the respective julia code, i.e. defined functions are then in the workspace
@@ -42,7 +34,6 @@ const Ne = 4000
 const Ni = 1000
 
 Ncells = Ne + Ni
-
 # Set integration timestep
 dt 	= 0.1 #integration timestep in ms
 
@@ -50,6 +41,9 @@ ifiSTDP = true 		#  include inhibitory plasticity
 ifwadapt = false	#  consider AdEx or Ex IF neurons
 
 # --------------------- generate the stimulus --------------------------------------------
+
+# In case this file is not run from the command line specify the ARGS list of strings
+#ARGS = ["3", "20", "10", "1","300", "12", "5", "10", "0", "10"]
 
 # stimulus parameters
 Nimg = parse(Int64, ARGS[1])		# number of stimuli per sequence

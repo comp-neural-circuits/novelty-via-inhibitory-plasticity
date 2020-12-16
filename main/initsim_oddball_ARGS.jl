@@ -5,8 +5,6 @@
 # output: hdf5 file with stimulus parameters, run results (weight matrices, spiketimes, total number of spikes)
 # ----------------------------------------------------------------------------------------
 
-# if using atom and open folder function go into main folder
-#cd("./main/")
 
 # include inbuilt modules
 using PyPlot
@@ -16,12 +14,7 @@ using Dates
 using LinearAlgebra
 using Random
 using Distributed
-#using Revise
-#using Profile
 
-println(pwd())
-# enable or disable certain functions
-plotting            = false  # make plots
 
 # --------------------- include functions  ------------------------------------------------
 # include runs the respective julia code, i.e. defined functions are then in the workspace
@@ -36,14 +29,18 @@ include("../evaluation/evaluationfunctions.jl")
 # Define number of excitatory and inhibitory neurons
 const Ne = 4000
 const Ni = 1000
-#Threads.@threads for reps = 1:10 # repeat meas several times
+
 Ncells = Ne + Ni
 # Set integration timestep
 dt 	= 0.1 #integration timestep in ms
 
 ifiSTDP = true 		#  include inhibitory plasticity
 ifwadapt = false	#  consider AdEx or Ex IF neurons
+
 # --------------------- generate the stimulus --------------------------------------------
+
+# In case this file is not run from the command line specify the ARGS list of strings
+#ARGS = ["20", "1", "300", "900", "200", "0", "10"]
 
 # stimulus parameters
 Nimg = 1		# number of images per sequence
@@ -293,12 +290,12 @@ end
 # precompile simulation function (speed up)
 @time runsimulation_inhibtuning(ifiSTDP,ifwadapt,stimparams,stimulus, weights, assemblymembers, spiket, storagedec,
  storagetimes,savefile, lenpretrain, inhibassemblies, adjustfactor = adjustfactor,
-  adjustfactorinhib = adjustfactorinhib, inhibfactor = inhibfactor, inhibhetero = inhibhetero,T =1)
+  adjustfactorinhib = adjustfactorinhib, inhibfactor = inhibfactor, T =1)
 # run main simulation
 @time totalspikes = runsimulation_inhibtuning(ifiSTDP,ifwadapt,stimparams,stimulus, weights,
  assemblymembers, spiket, storagedec, storagetimes, savefile,lenpretrain,inhibassemblies,
   adjustfactor = adjustfactor, adjustfactorinhib = adjustfactorinhib,inhibfactor = inhibfactor,
-  inhibhetero = inhibhetero, T = T)
+   T = T)
 
 # ---------------------- store final params ---------------------------------------------------------
 h5write(savefile, "postsim/weights", weights)
