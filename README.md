@@ -65,8 +65,10 @@ Nreps 20, Nblocks 1, lenstim 300, lenpause 900, Nneurons 200, pretrain false, in
 > nohup julia initsim_oddball_ARGS.jl 20 1 300 900 200 0 10 &> ../tmp/SSA_standard_condition.txt &
 
 - for the standard SSA oddball experiment with disinhibition  (compare Figure 6)  
-Nreps 20, Nblocks 1, lenstim 300, lenpause 900, Nneurons 200, pretrain false, inhibfactor 0.1, disinhibfraction 1.5  
+Nreps 20, Nblocks 1, lenstim 300, lenpause 900, Nneurons 200, pretrain false, inhibfactor 0.1, disinhibstrength 1.5  
 > nohup julia initsim_oddball_disinhib_ARGS.jl 20 1 300 900 200 0 10 150 &> ../tmp/SSA_disinhibition_strength_150.txt &
+
+In order to produce Fig. 6 D and E the code above was run 5 times for 8 varying disinhibstrength values ranging from (0 to 1.5).  
 
 #### Postprocessing  
 
