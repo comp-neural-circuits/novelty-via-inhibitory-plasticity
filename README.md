@@ -67,8 +67,8 @@ Nimg 3, Nreps 20, Nseq 5, Nblocks 10, lenstim 300, strength 12, Ntrain 5, adjust
 #### For 2. the oddball paradigm,  
 run the following command
 - for the standard SSA oddball experiment without disinhibition (compare Figure 5)  
-Nreps 20, Nblocks 1, lenstim 300, lenpause 900, Nneurons 200, pretrain false, inhibfactor 0.1  
-> nohup julia initsim_oddball_ARGS.jl 20 1 300 900 200 0 10 &> ../tmp/SSA_standard_condition.txt &
+Nreps 20, Nblocks 1, lenstim 300, lenpause 900, Nneurons 200, pretrain false, inhibfactor 0.1 , disinhibstrength 0
+> nohup julia initsim_oddball_disinhib_ARGS.jl 20 1 300 900 200 0 10 0 &> ../tmp/SSA_disinhibition_strength_0.txt &
 
 - for the standard SSA oddball experiment with disinhibition  (compare Figure 6)  
 Nreps 20, Nblocks 1, lenstim 300, lenpause 900, Nneurons 200, pretrain false, inhibfactor 0.1, disinhibstrength 1.5  
@@ -83,17 +83,18 @@ Specify the name of the file to be analysed in the respective notebooks.
 
 To test if the simulations were successful we provide two example notebooks
 
-- for the unique sequence paradigm:   Figure_sequence_violation.ipynb
+- for the unique sequence paradigm:   
+Figure_sequence_violation.ipynb
 - oddball experiment:  
 Figure_oddball_paradigm.ipynb
 
 #### Figure generating notebooks
 
-Note that some of the post processing steps performed in the notebooks are only compatible with certain stimulation parameters and or various other stimulation paradigms not specified here.   
+Note that at the moment, some of the post processing steps performed in the notebooks might only compatible with certain stimulation parameters and or various other stimulation paradigms not specified here.
 
-Upon publication we will provide all accompanying figure generating data.  
+Upon publication we will provide all data accompanying the figures.  
 
-In case you would like to generate all the figures shown in the paper, please send an email to ga84zah@mytum.de, we are happy to provide you with the corresponding datafiles. They are too large to include in this repository.
+In case you would like to already generate all the figures shown in the paper, please send an email to ga84zah@mytum.de, we are happy to provide you with the corresponding datafiles. They are too large to include in this repository. The notebooks generating the figures can be found under `postprocessing/Figure_x_.ipynb`
 
 Further commenting and clean up will be made prior to publication to ensure reusability and reproducibility.
 
