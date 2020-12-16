@@ -92,7 +92,7 @@ Figure_oddball_paradigm.ipynb
 
 Note that at the moment, some of the post processing steps performed in the notebooks might only be compatible with certain stimulation parameters and or various other stimulation paradigms not specified here.
 
-Upon publication we will provide all data accompanying the figures.  
+Upon publication, we will provide all data accompanying the figures.  
 
 In case you would like to already generate all the figures shown in the paper, please send an email to ga84zah@mytum.de, we are happy to provide you with the corresponding datafiles. They are too large to include in this repository. The notebooks generating the figures can be found under `postprocessing/Figure_x_.ipynb`
 
